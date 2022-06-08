@@ -3,12 +3,15 @@ from aiogram import types, Dispatcher
 from config import bot
 from decouple import config
 import aioschedule
+from parserHandler import parser
 
 """Каждый день в 12 00, Бот отправляет новости"""
 
 
 def news_alarm(message: types.Message):
-    bot.send_message(message.chat.id, 'Time to check News!')
+    news = parser.scrapy_script_news()
+    for i in news:
+        bot.send_message(message.chat.id, 'Time to check News!', i)
 
 
 async def scheduler():
